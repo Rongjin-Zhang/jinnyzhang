@@ -141,11 +141,11 @@
     font-weight: 900; letter-spacing: 0.2em; padding-left: 0.2em;
   }
   .cover-note {
-    position: absolute; top: 20px; right: 76px; z-index: 1; margin: 0; max-width: 330px;
-    text-align: right; font-family: var(--cover-font); font-style: italic; font-size: .9rem; line-height: 1.45; text-wrap: balance;
+    position: absolute; top: 22px; left: 0; right: 0; z-index: 1; margin: 0; padding: 0 70px;
+    text-align: center; white-space: nowrap; font-family: var(--cover-font); font-style: italic; font-size: .9rem;
     color: var(--muted); text-shadow: 0 0 8px var(--bg), 0 0 14px var(--bg); pointer-events: none;
   }
-  @media (max-width: 720px) { .cover-note { left: 20px; right: 70px; max-width: none; font-size: .8rem; } }
+  @media (max-width: 720px) { .cover-note { white-space: normal; font-size: .75rem; padding: 0 64px 0 20px; } }
   .cover h1, .cover-motto, .more-btn { font-family: var(--cover-font); }   /* cover page: Josefin Sans */
   .cover h1 { font-weight: 700; letter-spacing: 0.01em; }
   .hero h1 { font-family: var(--sans); font-weight: 700; }
