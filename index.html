@@ -355,10 +355,10 @@
   // The web of veins is not drawn by hand: it emerges from the agents following each other.
   // Your mouse is food: it releases a strong trail, so the network flows toward it.
   const RES = 0.6;              // simulation detail (1 = one cell per screen pixel, slower)
-  const AGENT_DENSITY = 0.3;    // agents per cell; more = denser web
+  const AGENT_DENSITY = 0.25;    // agents per cell; more = denser web
   const SENSOR_ANGLE = 0.6;     // radians between the front sensor and the side sensors
   let SENSOR_DIST = 10;         // how far ahead agents sense (cells); bigger = larger loops
-  const START_SENSOR_DIST = 26; // used only while the starting web forms, so it begins with fewer, larger loops
+  const START_SENSOR_DIST = 44; // used only while the starting web forms, so it begins with fewer, larger loops
   const TURN = 0.6;             // how sharply agents turn
   const SPEED = 1;              // cells per frame
   const DEPOSIT = 1.5;          // trail each agent leaves
@@ -390,7 +390,7 @@
     const lo = hex('--slime-faint'), hi = hex('--slime-bright');
     for (let i = 0; i < 256; i++) {
       const t = i / 255;
-      const a = t < 0.12 ? 0 : Math.min(1, Math.pow((t - 0.12) / 0.88, 0.7) * 1.2);   // hide the faintest trails
+      const a = t < 0.22 ? 0 : Math.min(1, Math.pow((t - 0.22) / 0.78, 0.7) * 1.2);   // hide the faintest trails
       const r = lo[0] + (hi[0] - lo[0]) * t, g = lo[1] + (hi[1] - lo[1]) * t, b = lo[2] + (hi[2] - lo[2]) * t;
       LUT[i] = (Math.round(a * 235) << 24) | (Math.round(b) << 16) | (Math.round(g) << 8) | Math.round(r);
     }
@@ -409,7 +409,7 @@
     // let the web form before it is shown (with a longer sensing range, so it starts calm instead of busy)
     const normalDist = SENSOR_DIST;
     SENSOR_DIST = START_SENSOR_DIST;
-    for (let i = 0; i < 150; i++) step(false);
+    for (let i = 0; i < 180; i++) step(false);
     SENSOR_DIST = normalDist;
   }
 
