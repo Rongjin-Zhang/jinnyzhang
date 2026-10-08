@@ -415,8 +415,9 @@
 
   function sense(i, offset) {
     const k = ((ad[i] + offset) * TK | 0) & (TN - 1);
-    const x = (ax[i] + COS[k] * SENSOR_DIST) | 0, y = (ay[i] + SIN[k] * SENSOR_DIST) | 0;
-    if (x < 0 || y < 0 || x >= gw || y >= gh) return -1;
+    // the edges wrap around, so sensors looking past one side read the opposite side
+    let x = (ax[i] + COS[k] * SENSOR_DIST) | 0, y = (ay[i] + SIN[k] * SENSOR_DIST) | 0;
+    x = (x + gw) % gw; y = (y + gh) % gh;
     return trail[y * gw + x];
   }
 
@@ -460,10 +461,10 @@
       }
       const k = (ad[i] * TK | 0) & (TN - 1);
       let x = ax[i] + COS[k] * SPEED, y = ay[i] + SIN[k] * SPEED;
-      if (x < 0 || y < 0 || x >= gw || y >= gh) {   // bounce off the screen edge
-        x = Math.min(gw - 1, Math.max(0, x)); y = Math.min(gh - 1, Math.max(0, y));
-        ad[i] = Math.random() * Math.PI * 2;
-      }
+      // no walls: leaving one edge brings the agent back in on the opposite edge,
+      // so the web runs off all four sides of the screen instead of forming a frame
+      if (x < 0) x += gw; else if (x >= gw) x -= gw;
+      if (y < 0) y += gh; else if (y >= gh) y -= gh;
       ax[i] = x; ay[i] = y;
       if (ad[i] > 100 || ad[i] < -100) ad[i] %= Math.PI * 2;
       trail[(y | 0) * gw + (x | 0)] += DEPOSIT;
@@ -471,9 +472,9 @@
     // trail spreads out (3x3 blur) and evaporates
     const keep = 1 - EVAPORATE;
     for (let y = 0; y < gh; y++) {
-      const y0 = y > 0 ? y - 1 : 0, y1 = y < gh - 1 ? y + 1 : gh - 1;
+      const y0 = y > 0 ? y - 1 : gh - 1, y1 = y < gh - 1 ? y + 1 : 0;   // wrap around
       for (let x = 0; x < gw; x++) {
-        const x0 = x > 0 ? x - 1 : 0, x1 = x < gw - 1 ? x + 1 : gw - 1;
+        const x0 = x > 0 ? x - 1 : gw - 1, x1 = x < gw - 1 ? x + 1 : 0;
         const a = y0 * gw, b = y * gw, c = y1 * gw;
         const blur = (trail[a + x0] + trail[a + x] + trail[a + x1] + trail[b + x0] + trail[b + x] + trail[b + x1]
                      + trail[c + x0] + trail[c + x] + trail[c + x1]) / 9;
