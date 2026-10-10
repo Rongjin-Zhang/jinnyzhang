@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jinny Zhang | PhD Student, Information and Decision Sciences</title>
+<meta name="description" content="Jinny (Rongjin) Zhang is a PhD student in Information and Decision Sciences at the University of Minnesota Carlson School of Management, studying human-GenAI collaboration, digital media, and surveillance.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Nunito:ital,wght@0,400;0,800;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&text=%E5%BC%A0%E6%A6%95%E6%B4%A5&display=swap" rel="stylesheet">  <!-- only downloads the 3 characters of the Chinese name -->
+<style>
+  /* ========== Colors (light theme) ========== */
+  :root {
+    /* colours taken from the background of the profile photo */
+    --bg: #FFFFFF;          /* the page below the cover is black and white */
+    --surface: #F3F3F3;
+    --text: #111111;
+    --muted: #5C5C5C;
+    --line: #E0E0E0;
+    --accent: #111111;
+    --accent-soft: #EEEEEE;
+    --slime-faint: #C4C4C4;   /* soft gray slime, so the black name stands out */
+    --slime-bright: #7A7A7A;
+    --serif: "Poppins", -apple-system, "Segoe UI", Roboto, sans-serif;
+    --sans: "Poppins", -apple-system, "Segoe UI", Roboto, sans-serif;
+    --cover-font: "Nunito", -apple-system, "Segoe UI", Roboto, sans-serif;   /* the whole cover page */
+  }
+  [data-theme="dark"] {
+    --bg: #0B0B0B;
+    --surface: #1A1A1A;
+    --text: #F5F5F5;
+    --muted: #A6A6A6;
+    --line: #2C2C2C;
+    --accent: #F5F5F5;
+    --accent-soft: #1F1F1F;
+    --slime-faint: #4A4A4A;   /* soft gray slime, so the white name stands out */
+    --slime-bright: #9E9E9E;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-padding-top: 72px; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.65;
+    transition: background .25s, color .25s;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .entry-title a, .row a { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  /* ========== Top navigation ========== */
+  nav {
+    /* pinned to the top of the screen; hidden on the cover, slides in as soon as you scroll */
+    position: fixed; top: 0; left: 0; right: 0; z-index: 15;
+    transform: translateY(-100%); opacity: 0; pointer-events: none;
+    transition: transform .4s cubic-bezier(.2, .7, .2, 1), opacity .4s ease;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    max-width: 960px; margin: 0 auto; padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  }
+  .nav-name { font-family: var(--serif); font-weight: 600; font-size: 1.1rem; color: var(--text); }
+  .nav-links { display: flex; gap: 22px; list-style: none; margin: 0; padding: 0; flex-wrap: wrap; }
+  .nav-links a { color: var(--muted); font-size: .95rem; }
+  .nav-links a:hover { color: var(--accent); text-decoration: none; }
+
+  /* ========== Layout ========== */
+  main { max-width: 960px; margin: 0 auto; padding: 0 24px 80px; }
+  section { padding: 56px 0 8px; }
+  h2 {
+    font-family: var(--serif); font-weight: 600; font-size: 1.75rem;
+    margin: 0 0 24px; padding-bottom: 10px; border-bottom: 1px solid var(--line);
+  }
+  h3 { font-family: var(--serif); font-weight: 600; font-size: 1.2rem; margin: 0 0 12px; }
+
+  /* ========== Dynamic cover (first screen) ========== */
+  .cover {
+    position: relative; height: 100vh; min-height: 480px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; overflow: hidden; padding: 0 24px; background: var(--bg);
+  }
+  #slime { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .cover-content { position: relative; z-index: 1; pointer-events: none; }
+  .cover-content .more-btn { pointer-events: auto; }
+  .cover h1 {
+    font-family: var(--sans); font-weight: 600; margin: 0 0 18px;
+    font-size: clamp(2.6rem, 7vw, 4.6rem); line-height: 1.1; color: #FFFFFF;
+    text-shadow: 0 2px 18px rgba(0, 0, 0, 0.75);
+  }
+  .cover-motto {
+    font-family: var(--sans); font-weight: 400; color: #FFFFFF;
+    font-size: clamp(1.35rem, 3vw, 2rem); margin: 0 auto 44px;
+    max-width: 900px; line-height: 1.6; font-style: italic; text-wrap: balance;
+    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.85);
+  }
+  .more-btn {
+    display: inline-block; padding: 10px 18px; border: 1.5px solid #FFFFFF;
+    color: #FFFFFF; font-family: var(--sans); font-size: 1.1rem;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  .more-btn:hover { background: #FFFFFF; color: #0B0B0B; text-decoration: none; }
+  .more-btn { cursor: pointer; }
+
+  /* light mode: the cover is white, so its text turns dark */
+  [data-theme="light"] .cover h1, [data-theme="light"] .cover-motto { color: #0B0B0B; text-shadow: 0 1px 14px rgba(255, 255, 255, 0.95); }
+  [data-theme="light"] .more-btn { color: #0B0B0B; border-color: #0B0B0B; background: rgba(255, 255, 255, 0.6); }
+  [data-theme="light"] .more-btn:hover { background: #0B0B0B; color: #FFFFFF; }
+
+  /* Floating light/dark button in the top-right corner, like the example */
+  .theme-float {
+    position: fixed; top: 12px; right: 18px; z-index: 20;
+    width: 40px; height: 40px; border-radius: 50%; border: none; cursor: pointer;
+    background: var(--surface); color: var(--text); font-size: 1.2rem;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.25);
+  }
+
+  /* ========== Hero ========== */
+  .hero {
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    gap: 26px; padding: 72px 0 40px;
+  }
+  .hero .buttons { justify-content: center; }
+  .bio { align-self: stretch; text-align: left; margin: 18px 0 0; line-height: 1.7; }
+  .hero-links { margin: 16px 0 0; display: flex; gap: 22px; justify-content: center; }
+  .hero-links a { color: var(--text); text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; font-weight: 500; }
+  .hero-links a:hover { opacity: .7; }
+
+  .cn-name {
+    display: block; margin: 6px 0 14px; font-weight: 500; letter-spacing: 0.12em;
+    font-size: clamp(1.4rem, 3.4vw, 2rem); color: var(--accent);
+    font-family: "Noto Serif SC", "Songti SC", "STSong", "SimSun", serif;   /* bold editorial serif */
+    font-weight: 900; letter-spacing: 0.2em; padding-left: 0.2em;
+  }
+  .cover-note {
+    position: absolute; top: 22px; left: 0; right: 0; z-index: 1; margin: 0; padding: 0 70px;
+    text-align: center; white-space: nowrap; font-family: var(--cover-font); font-style: italic; font-size: .9rem;
+    color: var(--muted); text-shadow: 0 0 8px var(--bg), 0 0 14px var(--bg); pointer-events: none;
+  }
+  @media (max-width: 720px) { .cover-note { white-space: normal; font-size: .75rem; padding: 0 64px 0 20px; } }
+  .cover h1, .cover-motto, .more-btn { font-family: var(--cover-font); }   /* cover page: Nunito */
+  .cover h1 { font-weight: 800; letter-spacing: 0.01em; }
+  .hero h1 { font-family: var(--cover-font); font-weight: 800; }   /* profile name: Nunito, like the cover */
+  .hero h1 {
+    
+    font-size: clamp(2rem, 5vw, 3rem); line-height: 1.1; margin: 0 0 12px;
+  }
+  .role { font-size: 1.1rem; color: var(--muted); margin: 0 0 6px; }
+  .motto { font-family: var(--serif); font-style: italic; font-size: 1.15rem; margin: 18px 0 28px; }
+  .photo {
+    width: 220px; height: 220px; border-radius: 50%; object-fit: cover;
+    border: 4px solid var(--surface); box-shadow: 0 0 0 1px var(--line);
+  }
+  .buttons { display: flex; flex-wrap: wrap; gap: 10px; }
+  .btn {
+    display: inline-block; padding: 8px 18px; border: 1px solid var(--line);
+    border-radius: 999px; color: var(--text); font-size: .95rem; font-weight: 500;
+    background: var(--surface);
+  }
+  .btn:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+  .btn.primary:hover { opacity: .9; color: var(--bg); }
+
+  /* ========== About ========== */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+  .edu-item { margin-bottom: 16px; }
+  .edu-item strong { display: block; }
+  .edu-item span { display: block; color: var(--muted); font-size: .95rem; }
+  .row.edu .sub { color: var(--muted); font-size: .95rem; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag { background: var(--accent-soft); color: var(--text); padding: 4px 12px; border-radius: 6px; font-size: .92rem; }
+
+  /* ========== Lists (papers, honors, talks) ========== */
+  .entry { padding: 16px 0; border-bottom: 1px solid var(--line); }
+  .entry:last-child { border-bottom: none; }
+  .entry-title { font-weight: 600; margin: 0 0 4px; }
+  .entry-meta { color: var(--muted); font-size: .95rem; margin: 0; }
+  .entry-meta em { color: var(--text); }
+  .me { text-decoration: underline; text-underline-offset: 3px; }
+  .links { margin-top: 6px; display: flex; gap: 14px; font-size: .9rem; }
+  .row { display: grid; grid-template-columns: 160px 1fr; gap: 16px; padding: 10px 0; }
+  .row .year { color: var(--muted); font-variant-numeric: tabular-nums; }
+
+  footer { text-align: center; color: var(--muted); font-size: .9rem; padding: 32px 24px; border-top: 1px solid var(--line); }
+
+  nav.show { transform: none; opacity: 1; pointer-events: auto; }
+
+  /* ========== Cover-to-profile animation ========== */
+  .reveal { opacity: 0; transform: translateY(28px);
+    transition: opacity .8s ease, transform .8s cubic-bezier(.2, .7, .2, 1); transition-delay: var(--d, 0ms); }
+  .reveal.in { opacity: 1; transform: none; }
+  .cover-content { will-change: transform, opacity; }
+
+  /* ========== Back to top ========== */
+  .to-top {
+    position: fixed; right: 24px; bottom: 24px; width: 42px; height: 42px; border-radius: 50%;
+    border: 1px solid var(--line); background: var(--surface); color: var(--text);
+    font-size: 1.1rem; cursor: pointer; opacity: 0; pointer-events: none; transition: opacity .2s;
+  }
+  .to-top.show { opacity: 1; pointer-events: auto; }
+
+  /* ========== Mobile ========== */
+  @media (max-width: 720px) {
+    .hero { gap: 20px; padding-top: 40px; }
+    .hero .photo { width: 170px; height: 170px; }
+    .about-grid { grid-template-columns: 1fr; gap: 24px; }
+    .nav-links { display: none; }
+    .row { grid-template-columns: 1fr; gap: 2px; }
+  }
+</style>
+</head>
+<body>
+
+<button class="theme-float" id="themeBtn" aria-label="Switch light or dark theme">☾</button>
+
+<!-- ===== DYNAMIC COVER: the first full screen visitors see ===== -->
+<div class="cover" id="top">
+  <canvas id="slime" aria-hidden="true"></canvas>
+  <p class="cover-note">The movement is inspired by slime mold, always adapting to and exploring our environment.</p>
+  <div class="cover-content">
+    <h1>Jinny Zhang</h1>
+    <p class="cover-motto">Don’t Ask, Don’t Get.</p>
+    <a class="more-btn" href="#details">More↓</a>
+  </div>
+</div>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#top" class="nav-name">Jinny Zhang</a>
+    <ul class="nav-links">
+      <li><a href="#details">About</a></li>
+      <li><a href="#papers">Papers</a></li>
+      <li><a href="#honors">Honors</a></li>
+      <li><a href="#insights">Insights</a></li>
+      <li><a href="#lectures">Lectures</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+
+  <!-- ===== PROFILE ===== -->
+  <header class="hero" id="details">
+    <img class="photo" src="photo.jpg" alt="Photo of Jinny Zhang">
+    <div>
+      <h1>Jinny (Rongjin) Zhang</h1>
+      <span class="cn-name" lang="zh-Hans">张榕津</span>
+      <p class="role">PhD Student in Information and Decision Sciences</p>
+      <p class="role">Carlson School of Management, University of Minnesota</p>
+      <p class="bio">I am a PhD student in Information and Decision Sciences at the Carlson School of Management, University of Minnesota. My research looks at how people interact with generative AI and digital media. I combine empirical and computational methods.</p>
+      <p class="hero-links"><a href="mailto:zhan8939@umn.edu">Email</a><a href="https://www.linkedin.com/in/rongjin-zhang" target="_blank" rel="noopener">LinkedIn</a></p>
+    </div>
+
+  </header>
+
+  <!-- ===== ABOUT ===== -->
+  <section id="about">
+    <h3>Education</h3>
+    <div class="row edu"><span class="year">2025 to present</span><span><strong>PhD, Business Administration (Information and Decision Sciences)</strong><br><span class="sub">Carlson School of Management, University of Minnesota</span></span></div>
+    <div class="row edu"><span class="year">2023 to 2025</span><span><strong>M.A., Communication</strong><br><span class="sub">Hubbard School of Journalism and Mass Communication, University of Minnesota<br>Advisor: Dr. Claire M. Segijn</span></span></div>
+    <div class="row edu"><span class="year">2020 to 2023</span><span><strong>Honors B.Sc., Communication Science</strong><br><span class="sub">University of Amsterdam<br>Minor in Data Science and Artificial Intelligence</span></span></div>
+
+    <h3 style="margin-top:32px">Research Interests</h3>
+    <div class="tags">
+      <span class="tag">Human-GenAI collaboration</span>
+      <span class="tag">Digital media</span>
+      <span class="tag">Surveillance</span>
+      <span class="tag">AI for education</span>
+    </div>
+  </section>
+
+  <!-- ===== PAPERS ===== -->
+  <section id="papers">
+    <h2>Papers</h2>
+    <div class="entry">
+      <p class="entry-title">Agentic AI and Managers’ Analytics Capabilities: An Exploration</p>
+      <p class="entry-meta">Bapna, S., <span class="me">Zhang, R.</span>, Yang, M., Bapna, R., Umyarov, A., Pamuru Subramanya Rama, V., &amp; Kumar, P. Under revision at <em>Information Systems Research</em>.</p>
+    </div>
+
+    <h3 style="margin-top:36px">Conference Presentations</h3>
+    <div class="entry">
+      <p class="entry-title">Rethinking “Fit”: A Structural Nudge to Reduce Gender Gaps in Engineering Job Applications</p>
+      <p class="entry-meta"><span class="me">Zhang, R.</span> <em>Conference on Field Experiments in Strategy (CFXS)</em>, Washington, D.C.</p>
+    </div>
+  </section>
+
+  <!-- ===== HONORS ===== -->
+  <section id="honors">
+    <h2>Awards &amp; Honors</h2>
+    <div class="row"><span class="year">2026</span><span>American Academy of Advertising (AAA) Best Conference Paper</span></div>
+    <div class="row"><span class="year">2026</span><span>American Academy of Advertising (AAA) Graduate Student Scholarship</span></div>
+    <div class="row"><span class="year">2024</span><span>International Conference on Research in Advertising (ICORIA) Student Grant</span></div>
+    <div class="row"><span class="year">2023<br>2024</span><span>William D. Wells Endowment for the Scientific Study of Strategic Communication ($6,000)</span></div>
+    <div class="row"><span class="year">2024</span><span>Special Director’s Research Award ($1,000)</span></div>
+    <div class="row"><span class="year">2024</span><span>Kriss Research Grant ($750)</span></div>
+  </section>
+
+  <!-- ===== INSIGHT ARTICLES ===== -->
+  <section id="insights">
+    <h2>Insight Articles and Newsletters</h2>
+    <div class="entry">
+      <p class="entry-title"><a href="https://cmr.berkeley.edu/2026/04/chatbot-frustration-is-real-hidden-costs-and-best-practices/" target="_blank">Chatbot Frustration Is Real: Hidden Costs and Best Practices</a></p>
+      <p class="entry-meta">Ren, Y., &amp; <span class="me">Zhang, R.</span> (2026, April). <em>California Management Review</em>.</p>
+    </div>
+    <div class="entry">
+      <p class="entry-title">User Choices and AI Platform Governance: The Case of GPT-4o Retirement</p>
+      <p class="entry-meta">Under review.</p>
+    </div>
+    <div class="entry">
+      <p class="entry-title">Looking Back and Bridging the Future: How Emerging Technologies Are Transforming Advertising Research and Consumer Experience</p>
+      <p class="entry-meta"><span class="me">Zhang, R. J.</span> (2024, December). <em>American Academy of Advertising Newsletter</em>.</p>
+    </div>
+  </section>
+
+  <!-- ===== GUEST LECTURES ===== -->
+  <section id="lectures">
+    <h2>Guest Lectures</h2>
+    <div class="row"><span class="year">Fall 2026</span><span>“Chatbots and Communication,” <a href="https://schedulebuilder.umn.edu/explore/2026Fall/JOUR/4251" target="_blank">JOUR 4251</a>, University of Minnesota</span></div>
+    <div class="row"><span class="year">Spring 2025</span><span>“How to Build Your Own AI Chatbot,” JOUR 4590, University of Minnesota</span></div>
+  </section>
+
+</main>
+
+<footer>© 2026 Jinny (Rongjin) Zhang. Last updated October 2026.</footer>
+
+<button class="to-top" id="toTop" aria-label="Back to top">↑</button>
+
+<script>
+  // Light / dark theme toggle (remembers your choice)
+  const btn = document.getElementById('themeBtn');
+  const root = document.documentElement;
+  function setTheme(t) {
+    root.setAttribute('data-theme', t);
+    btn.textContent = t === 'dark' ? '☀' : '☾';
+    try { localStorage.setItem('theme', t); } catch (e) {}
+  }
+  let saved = null;
+  try { saved = localStorage.getItem('theme'); } catch (e) {}
+  setTheme(saved || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+  btn.addEventListener('click', () => setTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
+
+
+  // ===== Slime mold cover: agent-based Physarum simulation =====
+  // Based on Jeff Jones's model, popularised by Sage Jenson:
+  // thousands of tiny agents each sense the trail ahead (left, front, right), turn toward the
+  // strongest, step forward and leave trail behind. The trail spreads out and slowly evaporates.
+  // The web of veins is not drawn by hand: it emerges from the agents following each other.
+  // Your mouse is food: it releases a strong trail, so the network flows toward it.
+  const RES = 0.6;              // simulation detail (1 = one cell per screen pixel, slower)
+  const AGENT_DENSITY = 0.25;    // agents per cell; more = denser web
+  const SENSOR_ANGLE = 0.6;     // radians between the front sensor and the side sensors
+  let SENSOR_DIST = 10;         // how far ahead agents sense (cells); bigger = larger loops
+  const START_SENSOR_DIST = 44; // used only while the starting web forms, so it begins with fewer, larger loops
+  const TURN = 0.6;             // how sharply agents turn
+  const SPEED = 1;              // cells per frame
+  const DEPOSIT = 1.5;          // trail each agent leaves
+  const EVAPORATE = 0.1;        // fraction of trail that fades each frame
+  const SPREAD = 0.25;          // how much the trail blurs outward each frame (lower = thinner veins)
+  const FOOD = 60;              // strength of the mouse as food
+  const FOOD_RADIUS = 16;       // size of the food (cells)
+  const PULL = 0.9;             // how strongly agents steer toward the food
+  const PULL_RANGE = 600;       // how far (cells) agents can smell the food
+  const FOOD_SPOTS = 2;         // drifting food spots that keep it moving when the mouse is still
+
+  const canvas = document.getElementById('slime');
+  const ctx = canvas.getContext('2d');
+  const bg = document.createElement('canvas'), bctx = bg.getContext('2d');
+  const sim = document.createElement('canvas'), sctx = sim.getContext('2d');
+  const mouse = { x: null, y: null, lastMove: -1e9 };
+  let w = 0, h = 0, gw = 0, gh = 0, trail, next, ax, ay, ad, img, pix, spots = [];
+
+  // fast sine/cosine lookup tables (the simulation needs millions of them per second)
+  const TN = 4096, TK = TN / (Math.PI * 2), COS = new Float32Array(TN), SIN = new Float32Array(TN);
+  for (let i = 0; i < TN; i++) { COS[i] = Math.cos(i / TK); SIN[i] = Math.sin(i / TK); }
+
+  // colour lookup: trail strength -> translucent yellow
+  const LUT = new Uint32Array(256);
+  // slime colour comes from --slime-faint and --slime-bright (set per theme in the CSS)
+  function buildColors() {
+    const css = getComputedStyle(root);
+    const hex = v => { const c = css.getPropertyValue(v).trim().replace('#', ''); return [0, 2, 4].map(i => parseInt(c.slice(i, i + 2), 16)); };
+    const lo = hex('--slime-faint'), hi = hex('--slime-bright');
+    for (let i = 0; i < 256; i++) {
+      const t = i / 255;
+      const a = t < 0.22 ? 0 : Math.min(1, Math.pow((t - 0.22) / 0.78, 0.7) * 1.2);   // hide the faintest trails
+      const r = lo[0] + (hi[0] - lo[0]) * t, g = lo[1] + (hi[1] - lo[1]) * t, b = lo[2] + (hi[2] - lo[2]) * t;
+      LUT[i] = (Math.round(a * 235) << 24) | (Math.round(b) << 16) | (Math.round(g) << 8) | Math.round(r);
+    }
+  }
+
+  function setup() {
+    gw = Math.max(50, Math.round(w * RES)); gh = Math.max(50, Math.round(h * RES));
+    trail = new Float32Array(gw * gh); next = new Float32Array(gw * gh);
+    const n = Math.round(gw * gh * AGENT_DENSITY);
+    ax = new Float32Array(n); ay = new Float32Array(n); ad = new Float32Array(n);
+    for (let i = 0; i < n; i++) { ax[i] = Math.random() * gw; ay[i] = Math.random() * gh; ad[i] = Math.random() * Math.PI * 2; }
+    sim.width = gw; sim.height = gh;
+    img = sctx.createImageData(gw, gh); pix = new Uint32Array(img.data.buffer);
+    spots = [];
+    for (let i = 0; i < FOOD_SPOTS; i++) spots.push({ x: Math.random() * gw, y: Math.random() * gh, a: Math.random() * 6.28 });
+    // let the web form before it is shown (with a longer sensing range, so it starts calm instead of busy)
+    const normalDist = SENSOR_DIST;
+    SENSOR_DIST = START_SENSOR_DIST;
+    for (let i = 0; i < 180; i++) step(false);
+    SENSOR_DIST = normalDist;
+  }
+
+  function sense(i, offset) {
+    const k = ((ad[i] + offset) * TK | 0) & (TN - 1);
+    // the edges wrap around, so sensors looking past one side read the opposite side
+    let x = (ax[i] + COS[k] * SENSOR_DIST) | 0, y = (ay[i] + SIN[k] * SENSOR_DIST) | 0;
+    x = (x + gw) % gw; y = (y + gh) % gh;
+    return trail[y * gw + x];
+  }
+
+  function addFood(cx, cy, amount) {
+    const r = FOOD_RADIUS;
+    for (let y = Math.max(0, (cy - r) | 0); y <= Math.min(gh - 1, cy + r); y++)
+      for (let x = Math.max(0, (cx - r) | 0); x <= Math.min(gw - 1, cx + r); x++) {
+        const d = Math.hypot(x - cx, y - cy);
+        if (d < r) trail[y * gw + x] += amount * (1 - d / r);
+      }
+  }
+
+  let fx = null, fy = null;   // current food point that agents steer toward
+  function step(useMouse) {
+    fx = useMouse ? mouse.x * RES : null; fy = useMouse ? mouse.y * RES : null;
+    // food: the mouse when it is moving, otherwise slowly drifting spots
+    if (useMouse) addFood(mouse.x * RES, mouse.y * RES, FOOD);
+    else for (const s of spots) {
+      s.a += (Math.random() - 0.5) * 0.2;
+      s.x += Math.cos(s.a) * 0.35; s.y += Math.sin(s.a) * 0.35;
+      if (s.x < 10 || s.x > gw - 10) s.a = Math.PI - s.a;
+      if (s.y < 10 || s.y > gh - 10) s.a = -s.a;
+      addFood(s.x, s.y, FOOD * 0.35);
+    }
+    // agents: sense, turn, move, deposit
+    const n = ax.length;
+    for (let i = 0; i < n; i++) {
+      const f = sense(i, 0), l = sense(i, -SENSOR_ANGLE), r = sense(i, SENSOR_ANGLE);
+      if (f > l && f > r) { /* keep going straight */ }
+      else if (f < l && f < r) ad[i] += (Math.random() < 0.5 ? -1 : 1) * TURN;
+      else if (l < r) ad[i] += TURN;
+      else if (r < l) ad[i] -= TURN;
+      ad[i] += (Math.random() - 0.5) * 0.1;
+      if (fx !== null) {   // agents that smell the food lean toward it
+        const dx = fx - ax[i], dy = fy - ay[i], d2 = dx * dx + dy * dy;
+        if (d2 < PULL_RANGE * PULL_RANGE && d2 > 4) {
+          const k = (ad[i] * TK | 0) & (TN - 1);
+          const cross = COS[k] * dy - SIN[k] * dx;   // which side the food is on
+          ad[i] += (cross > 0 ? 1 : -1) * PULL * (1 - Math.sqrt(d2) / PULL_RANGE);
+        }
+      }
+      const k = (ad[i] * TK | 0) & (TN - 1);
+      let x = ax[i] + COS[k] * SPEED, y = ay[i] + SIN[k] * SPEED;
+      // no walls: leaving one edge brings the agent back in on the opposite edge,
+      // so the web runs off all four sides of the screen instead of forming a frame
+      if (x < 0) x += gw; else if (x >= gw) x -= gw;
+      if (y < 0) y += gh; else if (y >= gh) y -= gh;
+      ax[i] = x; ay[i] = y;
+      if (ad[i] > 100 || ad[i] < -100) ad[i] %= Math.PI * 2;
+      trail[(y | 0) * gw + (x | 0)] += DEPOSIT;
+    }
+    // trail spreads out (3x3 blur) and evaporates
+    const keep = 1 - EVAPORATE;
+    for (let y = 0; y < gh; y++) {
+      const y0 = y > 0 ? y - 1 : gh - 1, y1 = y < gh - 1 ? y + 1 : 0;   // wrap around
+      for (let x = 0; x < gw; x++) {
+        const x0 = x > 0 ? x - 1 : gw - 1, x1 = x < gw - 1 ? x + 1 : 0;
+        const a = y0 * gw, b = y * gw, c = y1 * gw;
+        const blur = (trail[a + x0] + trail[a + x] + trail[a + x1] + trail[b + x0] + trail[b + x] + trail[b + x1]
+                     + trail[c + x0] + trail[c + x] + trail[c + x1]) / 9;
+        next[b + x] = (trail[b + x] * (1 - SPREAD) + blur * SPREAD) * keep;
+      }
+    }
+    const t = trail; trail = next; next = t;
+  }
+
+  const hexA = (hex, a) => { const c = hex.replace('#', ''); return `rgba(${parseInt(c.slice(0, 2), 16)}, ${parseInt(c.slice(2, 4), 16)}, ${parseInt(c.slice(4, 6), 16)}, ${a})`; };
+  let exposure = 30;
+  function render() {
+    ctx.drawImage(bg, 0, 0, w, h);
+    let sum = 0;
+    for (let i = 0; i < trail.length; i += 7) sum += trail[i];
+    const mean = sum / (trail.length / 7);
+    exposure += (mean * 7 - exposure) * 0.05;   // adapts so the web never saturates into blobs
+    const scale = 255 / Math.max(5, exposure);
+    for (let i = 0; i < trail.length; i++) {
+      const v = trail[i] * scale;
+      pix[i] = LUT[v > 255 ? 255 : v | 0];
+    }
+    sctx.putImageData(img, 0, 0);
+    ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(sim, 0, 0, w, h);
+    // gently fade the slime behind the name and quote so the text stays clear
+    const bgc = getComputedStyle(root).getPropertyValue('--bg').trim();
+    const cx = w / 2, cy = h * 0.47, rx = Math.min(w * 0.42, 520), ry = Math.min(h * 0.3, 230);
+    ctx.save();
+    ctx.translate(cx, cy); ctx.scale(1, ry / rx);
+    const fade = ctx.createRadialGradient(0, 0, 0, 0, 0, rx);
+    fade.addColorStop(0, hexA(bgc, 0.78)); fade.addColorStop(0.55, hexA(bgc, 0.55)); fade.addColorStop(1, hexA(bgc, 0));
+    ctx.fillStyle = fade; ctx.fillRect(-rx, -rx, rx * 2, rx * 2);
+    ctx.restore();
+  }
+
+  function paintBackground() {
+    buildColors();
+    // the cover uses exactly the same background colour as the rest of the page
+    bctx.fillStyle = getComputedStyle(root).getPropertyValue('--bg').trim();
+    bctx.fillRect(0, 0, w, h);
+  }
+
+
+  function resize(force) {
+    const newW = canvas.offsetWidth, newH = canvas.offsetHeight;
+    if (!force && Math.abs(newW - w) < 50 && Math.abs(newH - h) < 150) return;
+    w = newW; h = newH;
+    const dpr = window.devicePixelRatio || 1;
+    for (const [cv, cx] of [[canvas, ctx], [bg, bctx]]) {
+      cv.width = w * dpr; cv.height = h * dpr; cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    paintBackground();
+    setup();
+  }
+
+  // pause the simulation while the cover is scrolled out of view (saves battery)
+  let onScreen = true;
+  new IntersectionObserver(es => { onScreen = es[0].isIntersecting; }).observe(canvas);
+
+  function loop(now) {
+    if (onScreen) {
+      const following = mouse.x !== null && now - mouse.lastMove < 1500;
+      step(following);
+      render();
+    }
+    requestAnimationFrame(loop);
+  }
+
+  function trackPointer(clientX, clientY) {
+    const r = canvas.getBoundingClientRect();
+    const inside = clientX >= r.left && clientX <= r.right && clientY >= r.top && clientY <= r.bottom;
+    if (inside) { mouse.x = clientX - r.left; mouse.y = clientY - r.top; mouse.lastMove = performance.now(); }
+    else { mouse.x = mouse.y = null; }
+  }
+  window.addEventListener('mousemove', e => trackPointer(e.clientX, e.clientY));
+  window.addEventListener('touchmove', e => trackPointer(e.touches[0].clientX, e.touches[0].clientY), { passive: true });
+  document.addEventListener('mouseleave', () => { mouse.x = mouse.y = null; });
+  window.addEventListener('touchend', () => { mouse.x = mouse.y = null; });
+  addEventListener('resize', () => resize(false));
+  btn.addEventListener('click', paintBackground);
+  resize(true);
+  requestAnimationFrame(loop);
+
+  // ===== Pinned header: appears the moment you start scrolling off the cover =====
+  const navBar = document.querySelector('nav');
+  const updateNav = () => navBar.classList.toggle('show', scrollY > 10);
+  addEventListener('scroll', updateNav, { passive: true });
+  updateNav();
+
+  // ===== Smooth gliding scroll for "More", the menu links, and back-to-top =====
+  // (done in JavaScript so it always animates, even when the computer has animations reduced)
+  function glideTo(targetY, duration = 1000) {
+    const startY = scrollY, dist = targetY - startY, t0 = performance.now();
+    const ease = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;   // ease in and out
+    (function frame(now) {
+      const t = Math.min(1, (now - t0) / duration);
+      window.scrollTo(0, startY + dist * ease(t));
+      if (t < 1) requestAnimationFrame(frame);
+    })(t0);
+  }
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', e => {
+      const id = link.getAttribute('href').slice(1);
+      const target = id ? document.getElementById(id) : null;
+      if (!target) return;
+      e.preventDefault();
+      const navH = document.querySelector('nav').offsetHeight;
+      const y = id === 'top' ? 0 : target.getBoundingClientRect().top + scrollY - navH - 8;
+      glideTo(y, link.classList.contains('more-btn') ? 1200 : 900);
+      history.replaceState(null, '', '#' + id);
+    });
+  });
+
+  // ===== Profile fades and slides in as you arrive from the cover =====
+  (function () {
+    const items = document.querySelectorAll('#details .photo, #details h1, #details .cn-name, #details .role, #details .bio, #details .hero-links');
+    items.forEach((el, i) => { el.classList.add('reveal'); el.style.setProperty('--d', Math.min(i, 6) * 90 + 'ms'); });
+    if (!('IntersectionObserver' in window)) { items.forEach(el => el.classList.add('in')); return; }
+    const io = new IntersectionObserver(entries => {
+      for (const e of entries) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    }, { threshold: 0.12 });
+    items.forEach(el => io.observe(el));
+  })();
+
+  // ===== Cover text drifts up and fades as you scroll away from it =====
+  (function () {
+    // the cover text drifts up and fades as you scroll away from it
+    const coverText = document.querySelector('.cover-content');
+    let ticking = false;
+    addEventListener('scroll', () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const y = Math.min(scrollY, innerHeight);
+        coverText.style.transform = `translateY(${-y * 0.35}px)`;
+        coverText.style.opacity = Math.max(0, 1 - y / (innerHeight * 0.6));
+        ticking = false;
+      });
+    }, { passive: true });
+  })();
+
+  // Back to top button
+  const toTop = document.getElementById('toTop');
+  addEventListener('scroll', () => toTop.classList.toggle('show', scrollY > 500));
+  toTop.addEventListener('click', () => glideTo(0));
+</script>
+</body>
+</html>
